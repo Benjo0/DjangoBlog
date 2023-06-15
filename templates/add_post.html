@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 * {
@@ -52,24 +55,23 @@ body {
 </div>
 <div class="row">
   <div class="leftcolumn">
-    <a href="{% url 'add_post' %}"><h2>Add post</h2></a>
+    <h2>Add blog post</h2>
   </div>
 </div>
 
 <div class="row">
   <div class="leftcolumn">
-    {% for post in posts reversed %}
     <div class="card">
-      <a style="text-decoration: none; color: black;" href="/post/{{post.id}}">
-        <h2>{{post.title}}</h2>
-        <h5>{{post.created_At}}</h5>
-        <p>{{post.body|truncatewords:20|safe}}</p>
-      </a>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Post</button>
+        </form>
     </div>
-    {% endfor %}
   </div>
 </div>
-
+<a href="{% url 'index' %}"><button class="btn btn-primary">Back</button>
 
 </body>
 </html>
